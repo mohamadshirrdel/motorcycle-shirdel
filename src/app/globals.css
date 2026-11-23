@@ -1,0 +1,186 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: rgb(var(--ink));
+  --color-panel: rgb(var(--panel));
+  --color-panel2: rgb(var(--panel2));
+  --color-panel3: rgb(var(--panel3));
+  --color-line: rgb(var(--line));
+  --color-stage: rgb(var(--stage));
+  --color-strong: rgb(var(--strong));
+  --color-body: rgb(var(--body));
+  --color-soft: rgb(var(--soft));
+  --color-muted: rgb(var(--muted));
+  --color-faint: rgb(var(--faint));
+  --color-gold: rgb(var(--gold));
+  --color-accent: #e10600;
+  --color-accentSoft: #ff3b30;
+
+  --font-vazir: var(--font-vazir), Tahoma, sans-serif;
+
+  --shadow-glow: 0 0 60px rgb(var(--glow-c) / var(--glow-a));
+  --shadow-card: 0 20px 50px rgb(0 0 0 / var(--shadow-a));
+
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-fadeUp: fadeUp 0.7s ease-out both;
+  --animate-pulseDot: pulseDot 1.6s ease-in-out infinite;
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(24px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+}
+
+:root {
+  color-scheme: dark;
+  --ink: 11 11 16;
+  --panel: 20 20 27;
+  --panel2: 27 27 36;
+  --panel3: 34 34 45;
+  --line: 39 39 47;
+  --stage: 16 16 22;
+  --strong: 250 250 250;
+  --body: 228 228 231;
+  --soft: 205 205 214;
+  --muted: 154 154 166;
+  --faint: 82 82 91;
+  --gold: 227 176 75;
+  --shadow-a: 0.4;
+  --glow-c: 225 6 0;
+  --glow-a: 0.35;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --ink: 244 244 247;
+  --panel: 255 255 255;
+  --panel2: 238 238 243;
+  --panel3: 228 228 235;
+  --line: 222 222 229;
+  --stage: 234 234 240;
+  --strong: 24 24 27;
+  --body: 63 63 70;
+  --soft: 82 82 91;
+  --muted: 113 113 122;
+  --faint: 212 212 216;
+  --gold: 161 98 7;
+  --shadow-a: 0.12;
+  --glow-c: 225 6 0;
+  --glow-a: 0.22;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink text-body font-vazir antialiased;
+  background-image:
+    radial-gradient(1200px 600px at 85% -10%, rgba(225, 6, 0, 0.07), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, rgb(var(--gold) / 0.06), transparent 55%);
+  background-attachment: fixed;
+  transition: background-color 0.3s ease;
+}
+
+::selection {
+  background: #e10600;
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--panel2));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--panel3));
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e10600;
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 font-bold text-white transition hover:bg-accentSoft shadow-glow disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-xl border border-line bg-panel2 px-6 py-3 font-bold text-strong transition hover:border-accent hover:text-strong;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-panel shadow-card;
+  }
+  .input {
+    @apply w-full rounded-xl border border-line bg-panel2 px-4 py-3 text-sm text-strong placeholder-muted outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-bold text-muted;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-panel2 px-3 py-1 text-xs text-muted;
+  }
+  .th {
+    @apply px-4 py-3 text-right text-xs font-bold text-muted;
+  }
+  .td {
+    @apply px-4 py-3 text-sm align-middle;
+  }
+}
+
+.spec-row:nth-child(odd) {
+  background: rgb(var(--line) / 0.25);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* روی تصویر تیرهٔ هیرو، متن همیشه روشن می‌ماند (در هر دو تم) */
+.hero-light-text {
+  color: #fafafa !important;
+}
+.hero-light-soft {
+  color: #d4d4d8 !important;
+}
+
+/* صفحه‌بندی پنل مدیریت (react-responsive-pagination + classic theme) */
+.pagination.pagination {
+  --pagination-color: rgb(var(--soft));
+  --pagination-hover-color: rgb(var(--strong));
+  --pagination-hover-bg: rgb(var(--panel2));
+  --pagination-hover-border-color: rgb(var(--line));
+  --pagination-bg: rgb(var(--panel2));
+  --pagination-border-color: rgb(var(--line));
+  --pagination-border-radius: 0.65rem;
+  --pagination-item-margin-x: 0.14rem;
+  --pagination-padding-x: 0.72rem;
+  --pagination-padding-y: 0.32rem;
+  --pagination-active-color: #fff;
+  --pagination-active-bg: #e10600;
+  --pagination-active-border-color: #e10600;
+  --pagination-disabled-color: rgb(var(--faint));
+  --pagination-disabled-bg: transparent;
+  --pagination-font-size: 0.8rem;
+  --pagination-font-weight: 800;
+}
+.pagination.pagination .page-link {
+  min-width: 34px;
+  text-align: center;
+  font-family: var(--font-vazir), Tahoma, sans-serif;
+}

@@ -1,0 +1,14 @@
+import { chromium } from 'playwright';
+const BASE = 'http://localhost:27017';
+const browser = await chromium.launch();
+const context = await browser.newContext({ viewport: { width: 360, height: 800 } });
+await context.request.post(BASE + '/api/admin/login', { data: { username: 'mohammad', password: 'mmd073191' }, headers: { 'Content-Type': 'application/json' } });
+const page = await context.newPage();
+await page.goto(BASE + '/admin', { waitUntil: 'networkidle', timeout: 30000 });
+await page.click('button[aria-label*="منو"], header button');
+await page.waitForTimeout(600);
+await page.screenshot({ path: '/home/user/aria-motor/.audit/admin-drawer-360.png' });
+const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+console.log('overflow with drawer open:', overflow);
+await browser.close();
+console.log('done');
